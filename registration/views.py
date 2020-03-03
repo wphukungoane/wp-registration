@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-# Index page
+# Index Page
 def index(request):
-    return HttpResponse("Home Page for CHPC registration")
+    return render(request, 'registration/index.html', {})
+
+
+# Registration Page
+def registration(request):
+    return render(request, 'registration/registration.html', {})
