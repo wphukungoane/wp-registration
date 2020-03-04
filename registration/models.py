@@ -2,7 +2,7 @@ from django.db import models
 
 from django_countries.fields import CountryField
 
-# Create your models here.
+# User profile model
 class Profile(models.Model):
 
     TITLE_CHOICES = [
@@ -30,3 +30,23 @@ class Profile(models.Model):
     genger = models.CharField(max_length=11, choices=GENDER_CHOICES)
     nationality = CountryField(blank_label='(select country)')
     institution = models.TextField()
+
+# Project models
+class Project(models.Model):
+    
+    STATUS_CHOICES = [
+        ('Approved','Approved'),
+        ('Pending','Pending'),
+        ('Finished','Finished'),
+        ('Disabled','Disabled'),
+    ]
+
+    name = models.TextField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    shortname = models.CharField(max_length=10)
+    discipline = models.CharField(max_length=10)
+    project_user = models.CharField(max_length=10)
+    description = models.TextField() 
+    date_created = models.DateField(auto_now=True)
+    date_approved = models.DateField()
+    
