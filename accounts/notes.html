@@ -1,0 +1,49 @@
+{% for project in projects %}
+<tr>
+    <td>{{project.Name}}</td>
+    <td>{{project.Research_Area}}</td>
+    <td>{{project.Project_Owner}}</td>
+    <td>{{project.Created_at}}</td>
+    <td>{{project.status}}</td>
+
+</tr>
+{% empty %}
+    <li>No Project Records yet....Create New project</li>
+
+{% endfor %}
+{% block content %}
+<div class="card">
+	<h3 class="card-header text-center font-weight-bold text-uppercase py-4">List of Projects</h2>
+	<div class="card-body">
+		<div id="table" class="table-editable">
+
+			<table id="example"  style="width:100%"  class=" table-striped display">
+				<thead class="thead-light">
+					<tr>
+						<th scope="col" >Name</th>
+						<th scope="col" >Research Area</th>
+						<th scope="col" >Project Owner</th>
+						<th scope="col" >Created at</th>
+						<th scope="col" >Status</th>
+
+					</tr>
+				</thead>
+				{% block container %}
+<table class="table">
+
+        <tbody>
+
+
+
+        </tbody>
+</table>
+
+		</div>
+	</div>
+</div>
+
+
+{% include 'includes/pagination.html' %}
+
+{% endblock %}
+{% endblock %}
