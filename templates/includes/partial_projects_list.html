@@ -1,0 +1,25 @@
+
+          {% for project in projects %}
+          <tr role="row" class="odd">
+
+              <td ><a href="{% url 'project-detail' project.id  %}">{{project.project_code | upper}}</td>
+              <td>{{project.Project_Name | upper}}</td>
+              <td>{{project.Research_Area| upper}}</td>
+              <td>{{project.Project_Owner | upper}}</td>
+              <td>{{project.Created_at | date:"D, d F, Y" | upper}}</td>
+              <td>{{ project.status | upper}}</td>
+              <th>
+                {% if user.is_staff %}
+                   <a href="{% url 'project-update' project.id  %}" class="btn btn-warning "><i class="fa fa-edit" ></i>
+                     {% endif %}
+                       <a>
+                    <a href="{% url 'project-detail' project.id  %}" class="btn btn-primary"><i class="fa fa-info-circle" title="View Project"></i>
+                      </a>
+              </th>
+          </tr>
+            {% empty %}
+            <tr>
+              <td colspan="8" class="text-center "><strong>No Project Records ....Create New project </strong></td>
+            </tr>
+
+          {% endfor %}

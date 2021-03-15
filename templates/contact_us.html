@@ -1,0 +1,69 @@
+{% extends 'Dash_base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% block content %}
+<div id="layoutSidenav_content" >
+<main>
+    <div class="container-fluid">
+      <br>
+      <br>
+      <br>
+      {% if messages %}
+      <div class="row justify-content-center">
+      <div class="alert alert-success" role="alert">
+          <ul class="messages">
+              {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+              {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+              {{ message }}
+          </li>
+          {% endfor %}
+          </ul>
+          </div>
+          </div>
+{% endif %}
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Contact us</li>
+
+        </ol>
+        <div class="row justify-content-center" >
+          <div class="col-lg-10 col-md-8 col-sm-10"
+  <div class="container-fluid">
+    <div class=" card ">
+      <div class="card-body">
+        <form method="post" novalidate>
+        {% csrf_token %}
+        {% include 'includes/form.html' with form=form %}
+        <div class="form-actions">
+          <button type="submit" class="btn btn-success float-right">Send</button>
+          <a href="{% url 'home' %}" class="btn btn-outline-secondary  ">Back</a>
+
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+</main>
+<footer class="py-4 bg-light mt-auto">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+            <div>
+                <a href="#">Privacy Policy</a>
+                &middot;
+                <a href="#">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <br>
+    <br>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'Dash_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<!-- templates/home.html -->
+{% load socialaccount %}
+
+{% block title %}Create a report{% endblock title %}
+
+{% block extra_css %}
+    {{ wizard.form.media }}
+{% endblock extra_css %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'Projects-list' %}">Projects</a></li>
+            <li class="breadcrumb-item active">New Project</li>
+        </ol>
+          <div class="container">
+              <h1>Create a report</h1>
+
+              <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+
+              <form action="" method="post">
+                  {% csrf_token %}
+                  {{ wizard.management_form }}
+
+                  {% if wizard.form.forms %}
+                      {{ wizard.form.management_form }}
+                      {% for form in wizard.form.forms %}
+                          {{ form|crispy }}
+                      {% endfor %}
+                  {% else %}
+                      {{ wizard.form|crispy }}
+                  {% endif %}
+
+                  <div class="text-center">
+                      {% if wizard.steps.prev %}
+                      <button class="btn btn-lg btn-warning" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" formnovalidate>{% trans "first step" %}</button>
+                      <button class="btn btn-lg btn-primary" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" formnovalidate>{% trans "prev step" %}</button>
+                      {% endif %}
+                      {% if wizard.steps.next %}
+                          <button class="btn  btn-lg btn-primary" name="wizard_goto_step" type="submit" value="{{ wizard.steps.next }}">{% trans "next step" %}</button>
+                      {% endif %}
+
+                      <input class="btn btn-lg btn-success" type="submit" name="Submit" value="Create report">
+
+                  </div>
+
+              </form>
+
+              <hr>
+              <hr>
+
+          </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+{% endblock content %}

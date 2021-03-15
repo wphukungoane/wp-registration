@@ -1,0 +1,82 @@
+{% extends 'Dash_base.html' %}
+
+{% load static %}
+
+{% block title %} Project Details{% endblock %}
+
+{% block content %}
+<div id="layoutSidenav_content">
+	<main>
+	<div class="container-fluid">
+		<br>
+		<br>
+		<br>
+					<ol class="breadcrumb mb-4">
+							<li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+							<li class="breadcrumb-item"><a href="{% url 'Projects-list' %}">Projects</a></li>
+							<li class="breadcrumb-item active">Project Details</li>
+					</ol>
+					<div class="row justify-content-center">
+						<div class="col-lg-10 col-md-8 col-sm-10">
+							<div class="container-fluid" >
+								<div class=" card " >
+									<div class="card-body">
+					{% for Profile in profiles %}
+									<hr>
+
+									<h2 style="text-align:center "> THE {{Profile.user.username | upper}} PROFILE  </h2>
+
+									<hr>
+				    <dl class="row ">
+							<dt class="col-sm-3">  Full Name</dt>
+				      <dd class="col-sm-9">{{Profile.user.first_name | upper}}</dd>
+				      <dt class="col-sm-3"> Project Name</dt>
+				      <dd class="col-sm-9">{{Profile.user.username | upper}}</dd>
+				      <dt class="col-sm-3">Research Area</dt>
+				      <dd class="col-sm-9">{{Profile.user.email | upper}}</dd>
+							<dt class="col-sm-3">Project Lead</dt>
+				      <dd class="col-sm-9">{{Profile.institution | upper}}</dd>
+							<dt class="col-sm-3">Project Status</dt>
+							<dd class="col-sm-9">{{Profile.phone | upper}}</dd>
+							<dt class="col-sm-3">Project Description</dt>
+							<dd class="col-sm-9">{{Profile.Current_Position }}</dd>
+							<dt class="col-sm-3">Date Created</dt>
+							<dd class="col-sm-9">{{project.Created_at | date:"D, d F, Y" | upper}}</dd>
+
+
+							<hr class="col-sm-9" >
+							<dt class="col-sm-3">Comments by Approvers</dt>
+							<dd class="col-sm-9">{{Profile.phone  | upper}}</dd>
+							<dt class="col-sm-3">Updated At</dt>
+							<dd class="col-sm-9">{{Profile.phone  | date:"D, d F, Y" | upper}}</dd>
+
+
+
+				    </dl>
+						<a href="{% url 'Projects-list' %}" class="btn btn-outline-primary float-right ">Back</a>
+						{% endfor %}
+				</div>
+			</div>
+			</div>
+		</div>
+		</div>
+<br>
+<br>
+</main>
+
+
+				<footer class="py-4 bg-light mt-auto">
+						<div class="container-fluid">
+								<div class="d-flex align-items-center justify-content-between small">
+										<div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+										<div>
+												<a href="#">Privacy Policy</a>
+												&middot;
+												<a href="#">Terms &amp; Conditions</a>
+										</div>
+								</div>
+						</div>
+				</footer>
+
+
+{% endblock %}

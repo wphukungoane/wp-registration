@@ -1,0 +1,71 @@
+{% extends 'Dash_base.html' %}
+{% load static %}
+{% load humanize %}
+
+
+
+<title>{% block title %}Projects{% endblock %}</title>
+
+{% block content %}
+
+<div id="layoutSidenav_content">
+  <div class="container-fluid">
+      <h1 class="mt-4">Dashboard</h1>
+      <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+      <li class="breadcrumb-item active">Manage Projects</li>
+</ol>
+
+<table id = "dataTable" class = "table table-bordered " >
+    <thead class = "alert-success">
+
+					<tr>
+
+            <th>Project Owner</th>
+            <th>Project Name</th>
+            <th>Project Description</th>
+						<th>Research Area</th>
+						<th>Created at  </th>
+						<th>Status</th>
+            <th>Actions</th>
+
+				</thead>
+  <tbody>
+            {% for project in All_projects %}
+            <tr>
+                <td>{{project.Project_Owner}}</td>
+                <td>{{project.Project_Name}}</td>
+                <td>{{project.Project_Description}}</td>
+                <td>{{project.Research_Area}}</td>
+								<td>{{project.Created_at | date:"D, d F, Y"}}</td>
+								<td>{{project.status}}</td>
+                <td>
+                <a href="#"><span class="glyphicon glyphicon-pencil" >Join</span></a>
+
+                </td>
+
+            </tr>
+						{% empty %}
+						    <li>No Project Records yet....Create New project</li>
+            {% endfor %}
+            {% include 'includes/pagination.html' %}
+        </tbody>
+</table>
+
+</div>
+<footer class="py-4 bg-light mt-auto">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+            <div>
+                <a href="#">Privacy Policy</a>
+                &middot;
+                <a href="#">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+{% endblock %}

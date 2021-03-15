@@ -1,0 +1,52 @@
+{% extends 'Dash_base.html' %}
+
+{% block title %}project creation done{% endblock %}
+
+{% block content %}
+<div id="layoutSidenav_content">
+
+    <div class="container-fluid">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Projects</li>
+  </ol>
+
+    <main>
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-8">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Project created</h3>
+          <div class="alert alert-success" role="alert">
+          <p> Your project Application is successfully submitted to the CHPC OpenStack Team for the review.
+
+            Once a project is approved. An email with procedures to follow will be sent to you.
+
+            We are working hard to get back to you within 1-2 business days.</p>
+              </div>
+          <a href="{% url 'home' %}" class="btn btn-secondary btn-block">Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+  </div>
+
+
+  <footer class="py-4 bg-light mt-auto">
+      <div class="container-fluid">
+          <div class="d-flex align-items-center justify-content-between small">
+              <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+              <div>
+                  <a href="#">Privacy Policy</a>
+                  &middot;
+                  <a href="#">Terms &amp; Conditions</a>
+              </div>
+          </div>
+      </div>
+  </footer>
+  </div>
+{% endblock %}

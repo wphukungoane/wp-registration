@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Sign up to CHPC Openstack Users{% endblock %}
+
+{% block breadcrumb %}
+ <h2 class="fs-title"><p>Registrations</p></h2>
+{% endblock %}
+{% block content %}
+<div class="row justify-content-center" >
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+  <form method="post" novalidate>
+      {% csrf_token %}
+      <strong>Account Setup</strong>
+      <hr>
+      <div class="form-row">
+          <div class="form-group col-md-4 mb-4">
+            {{ user_form.username|as_crispy_field }}
+          </div>
+          <div class="form-group col-md-4 mb-4">
+            {{ user_form.password1|as_crispy_field }}
+          </div>
+          <div class="form-group col-md-4 mb-4">
+          {{ user_form.password2|as_crispy_field }}
+          </div>
+    </div>
+    <hr>
+    <strong>PERSONAL DETAILS</strong>
+    <hr>
+          <div class="form-row">
+                <div class="form-group col-md-2 mb-4">
+                {{profile_form.title|as_crispy_field }}
+                {{ profile_form.gender|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-4 mb-4">
+                {{ user_form.first_name|as_crispy_field }}
+                {{ profile_form.Ethnic_Group|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-4">
+                {{ user_form.last_name|as_crispy_field }}
+                {{ profile_form.nationality|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-12 mb-4">
+                {{ profile_form.Biography|as_crispy_field }}
+                </div>
+              </div>
+  <hr>
+ <strong>CONTACT DETAILS</strong>
+  <hr>
+          <div class="form-row">
+
+                <div class="form-group col-md-6 mb-4">
+                {{ user_form.email|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-4">
+                {{ profile_form.alt_email|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-4">
+                {{ profile_form.mobile|as_crispy_field }}
+                </div>
+          </div>
+
+
+
+
+          <div class="form-row">
+                <div class="form-group col-md-6 mb-4">
+                {{ profile_form.institution|as_crispy_field }}
+                {{ profile_form.Highest_Qualification|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-4">
+              {{ profile_form.Current_Position|as_crispy_field }}
+                </div>
+
+
+                {{ profile_form.User_status|as_crispy_field }}
+
+
+          </div>
+
+    <button type="submit" class="btn btn-primary float-sm-right">Create an account</button>
+</form>
+
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
