@@ -156,7 +156,7 @@ LOGOUT_REDIRECT_URL = 'login'
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = '10.128.89.51'
+EMAIL_HOST = '10.128.xUpdatei.x'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
