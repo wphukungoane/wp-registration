@@ -1,24 +1,90 @@
-{% extends 'base.html' %}
+{% extends 'Dash_base.html' %}
 
-{% load humanize %}
+{% load static %}
 
-{% block title %}
+{% block title %} Project Details{% endblock %}
 
-{% endblock %}
+{% block content %}
+<div id="layoutSidenav_content">
+	<main>
+	<div class="container-fluid">
+		<br>
+		<br>
+		<br>
+					<ol class="breadcrumb mb-4">
+							<li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+							<li class="breadcrumb-item"><a href="{% url 'Projects-list' %}">Projects</a></li>
+							<li class="breadcrumb-item active">Project Details</li>
+					</ol>
+					<div class="row justify-content-center">
+						<div class="col-lg-10 col-md-8 col-sm-10">
+							<div class="container-fluid" >
+								<div class=" card " >
+									<div class="card-body">
+					{% for project in projects %}
+									<hr>
 
-{% block container %}
-<div class="card">
-	<h3 class="card-header text-center font-weight-bold text-uppercase py-4">Project Details</h3>
-	<div class="card-body">
-    <div class="card-body">
-    <dl class="row">
-      <dt class="col-sm-3">Project Name</dt>
-      <dd class="col-sm-9">{{ project.name }}</dd>
-      <dt class="col-sm-3">Research_Area</dt>
-      <dd class="col-sm-9">{{ project.Research_Arear }}</dd>
-    </dl>
+									<h2 style="text-align:center "> THE {{project.Project_Name | upper}} PROJECT  </h2>
 
-    </div>
-</div>
+									<hr>
+				    <dl class="row ">
+							<dt class="col-sm-3">  Project Number</dt>
+				      <dd class="col-sm-9">{{project.project_code | upper}}</dd>
+				      <dt class="col-sm-3"> Project Name</dt>
+				      <dd class="col-sm-9">{{project.Project_Name | upper}}</dd>
+				      <dt class="col-sm-3">Research Area</dt>
+				      <dd class="col-sm-9">{{project.Research_Area | upper}}</dd>
+							<dt class="col-sm-3">Project Lead</dt>
+				      <dd class="col-sm-9">{{project.Project_Owner | upper}}</dd>
+							<dt class="col-sm-3">Project Status</dt>
+							<dd class="col-sm-9">{{project.status | upper}}</dd>
+							<dt class="col-sm-3">Project Description</dt>
+							<dd class="col-sm-9">{{project.Project_Description }}</dd>
+							<dt class="col-sm-3">Total Cores Required</dt>
+							<dd class="col-sm-9">{{project.Number_CPU }}</dd>
+                                                        <dt class="col-sm-3">Memory Required (GB)</dt>
+                                                        <dd class="col-sm-9">{{project.Memory_required }}</dd>
+							<dt class="col-sm-3">Storage Required (GB)</dt>
+                                                        <dd class="col-sm-9">{{project.Storage }}</dd>
+							<dt class="col-sm-3">Operating System</dt>
+                                                        <dd class="col-sm-9">{{project.OS_Type }}</dd>
+							<dt class="col-sm-3">Date Created</dt>
+							<dd class="col-sm-9">{{project.Created_at | date:"D, d F, Y" | upper}}</dd>
+
+
+							<hr class="col-sm-9" >
+							<dt class="col-sm-3">Remarks</dt>
+							<dd class="col-sm-9">{{project.Review | upper}}</dd>
+							<dt class="col-sm-3">Date Updated </dt>
+							<dd class="col-sm-9">{{project.UpdatedDate | date:"D, d F, Y" | upper}}</dd>
+
+
+
+				    </dl>
+						<a href="{% url 'Projects-list' %}" class="btn btn-outline-primary float-right ">Back</a>
+						{% endfor %}
+				</div>
+			</div>
+			</div>
+		</div>
+		</div>
+<br>
+<br>
+</main>
+
+
+				<footer class="py-4 bg-light mt-auto">
+						<div class="container-fluid">
+								<div class="d-flex align-items-center justify-content-between small">
+										<div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+										<div>
+												<a href="#">Privacy Policy</a>
+												&middot;
+												<a href="#">Terms &amp; Conditions</a>
+										</div>
+								</div>
+						</div>
+				</footer>
+
 
 {% endblock %}

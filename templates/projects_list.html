@@ -1,75 +1,99 @@
-{% extends 'base.html' %}
+{% extends 'Dash_base.html' %}
 {% load static %}
 {% load humanize %}
+{% load i18n %}
+{% load table_tags %}
 
-{% block breadcrumb %}
-<nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-ProjectList-tab" data-toggle="tab" href="{% url 'home' %}" role="tab" aria-controls="nav-ProjectList" aria-selected="true">Projects</a>
-    <a class="nav-item nav-link" id="nav-projects-tab" data-toggle="tab" href="new_project.html" role="tab" aria-controls="nav-project" aria-selected="false">Create New project</a>
-    <a class="nav-item nav-link" id="nav-members-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-members" aria-selected="false">Add Members</a>
-  </div>
-</nav>
-{% endblock %}
-{% block javascript %}
-  <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
-	<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
-  <script>
 
-		$(document).ready(function() {
-    var table = $('#example').removeAttr('width').DataTable( {
-        scrollY:        "300px",
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         false,
-        columnDefs: [
-            { width: 200, targets: 0 }
-        ],
-        fixedColumns: true
-    } );
-} );
 
-  </script>
-{% endblock %}
-
+<title>{% block title %}Projects{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.21/b-1.6.2/b-html5-1.6.2/r-2.2.4/datatables.min.css"/>
 {% block content %}
-<div class="card">
-	<h3 class="card-header text-center font-weight-bold text-uppercase py-4">List of Projects</h2>
-	<div class="card-body">
-		<div id="table" class="table-editable">
 
-			<table id="example"  style="width:100%"  class=" table-striped display">
-				<thead class="thead-light">
-					<tr>
-						<th scope="col" >Name</th>
-						<th scope="col" >Research Area</th>
-						<th scope="col" >Project Owner</th>
-						<th scope="col" >Created at</th>
-						<th scope="col" >Status</th>
 
-					</tr>
-				</thead>
-				{% block container %}
-<table class="table">
+<div id="layoutSidenav_content">
+  <main>
+  <div class="container-fluid">
+    <br>
+    <br>
+    <br>
+      <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}" >Dashboard</a></li>
+      <li class="breadcrumb-item active">Manage Projects</li>
+</ol>
+<div class="row justify-content-center">
 
-        <tbody>
-            {% for project in projects %}
+  <div class="container-fluid" >
+    <div class="card mb-4">
+
+    <div class="card-header">
+      <!-- Navbar Search-->
+      <form class="d-none d-md-inline-block form-inline mr-auto mr-0 mr-md-3 my-2 my-md-0">
+          <div class="input-group  margin-right: auto;">
+              <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+              <div class="input-group-append">
+                  <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+              </div>
+          </div>
+      </form>
+      <!-- Navbar-->
+    </div>
+
+    
+      <div class="card-body">
+        <table id = "table" class = "table table-striped table-bordered display" style="width:100%" >
+            <thead class = "alert-success" border="10px">
+
             <tr>
-                <td>{{project.Name}}</td>
-                <td>{{project.Research_Area}}</td>
-								<td>{{project.Project_Owner}}</td>
-								<td>{{project.Created_at}}</td>
-            </tr>
-						{% empty %}
-						    <li>No Projects yet.Create new project</li>
-            {% endfor %}
-        </tbody>
+            <th>Project Number</th>
+            <th>Project Name</th>
+            <th>Research Area</th>
+            <th>Project Owner</th>
+            <th>Created at  </th>
+            <th>Status</th>
+            <th> Actions</th>
+
+    </thead>
+    <tbody>
+  {% include 'includes/partial_projects_list.html' %}
+    </tbody>
 </table>
-
-		</div>
-	</div>
-</div>
 {% include 'includes/pagination.html' %}
+</div>
+</div>
+</div>
+</div>
+</div>
+<br>
+<br>
+</main>
+
+
+
+
+<footer class="py-4 bg-light mt-auto">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+            <div>
+                <a href="#">Privacy Policy</a>
+                &middot;
+                <a href="#">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
 {% endblock %}
-{% endblock %}
+<script type="text/javascript">
+   $(document).ready(function(){
+      $("table").dataTable({
+        "processing": true,
+        "serverSide": true,
+
+ });
+ });
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.21/b-1.6.2/b-html5-1.6.2/r-2.2.4/datatables.min.js"></script>

@@ -1,11 +1,20 @@
 html,
 body {
   height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background-size: cover;
+  background-image: url(../img/shattered.png);
+  font-size: 20px;
+  margin: 20;
 }
 
 .navbar-brand {
   font-family: 'Peralta', cursive;
+
+  color: white;
 }
+
+
 
 blockquote {
   border-left: 5px solid rgba(0,0,0,.125);
@@ -13,6 +22,8 @@ blockquote {
 }
 
 .wrapper {
+Address
+Country
   position: relative;
   min-height: 100%;
   height: auto !important;

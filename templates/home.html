@@ -1,51 +1,180 @@
-{% extends 'base.html' %}
-
+{% extends 'Dash_base.html' %}
+{% load static %}
 {% load humanize %}
 
-{% block breadcrumb %}
-  <li class="breadcrumb-item active">Boards</li>
-{% endblock %}
+
 
 {% block content %}
-  <table class="table">
-    <thead class="thead-inverse">
-      <tr>
-        <th>Board</th>
-        <th>Posts</th>
-        <th>Topics</th>
-        <th>Last Post</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for board in boards %}
-        <tr>
-          <td>
-            <a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a>
-            <small class="text-muted d-block">{{ board.description }}</small>
-          </td>
-          <td class="align-middle">
-            {{ board.get_posts_count }}
-          </td>
-          <td class="align-middle">
-            {{ board.topics.count }}
-          </td>
-          <td class="align-middle">
-            {% with post=board.get_last_post %}
-              {% if post %}
-                <small>
-                  <a href="{% url 'topic_posts' board.pk post.topic.pk %}">
-                    By {{ post.created_by.username }} {{ post.created_at|naturaltime }}
-                  </a>
-                </small>
-              {% else %}
-                <small class="text-muted">
-                  <em>No posts yet.</em>
-                </small>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<div id="layoutSidenav_content">
+    <main>
+
+          {% if not user.is_staff %}
+          <link  href="{% static 'css/homedash.css' %}" rel="stylesheet">
+          <div class="container-fluid">
+          <br>
+          <br>
+          <br>
+
+          <div class="card ">
+	   <ol class="breadcrumb mb-4" style="text-align:center">
+                <h1 >Welcome to Cloud User Database</h1>
+            </ol>
+                <div class="card-body">
+			<h2> Overview</h2>
+                  <p>The CHPC Openstack infrastructure is a compute cloud resource which provide researchers with access to a large set of CPU & RAM and are provisioned on a per instance basis. Instances are virtual machines and available to be provisioned in several different flavors. Choosing the right flavor will depends on your workflow.
+                    When provisioning instances you will have option to deploy using Dashboard or by using the API. You can also choose to build your own images by uploading a new image, or by creating one from a snapshot. Images are used to build your instances. They define the base operating system and can contain user applications. </p>
+                  <p><strong>NB** CHPC does not provide licenses, Appropriate licenses for any software run on the service by
+     users must be sought and applied by the users, including any licenses that may be required to run
+     instance operating systems.
+                    The Cloud is now open  to a broader community of researchers.
+                    To read about the features we offer, visit our<a href="http://wiki.chpc.ac.za/guide:cloud:overview"> Cloud Resources</a> page.
+
+                  </strong></p>
+                  <h2> Resource Allocation</h2>
+
+                  <p> The cloud resources are allocated on per project basis, then several instances are provisioned based on the available resources allocated to the project. The billing is calculated by allocation not by  percentage of utilization. The current billing fees are calculated as follows:</p>
+                  <ul>
+                   <li>R0.23 per vCPU hour.</li>
+			
+                   <li>R0.14  per GB hour of vMemory(vRAM)</li>
+
+                   <li>R0.0017  per GB hour of storage (volumes, images and object storage)</li>
+
+                  </ul>
+                  <p >For proper allocation and utilization of cloud resources. CHPC encourage all cloud users to apply for resources only sufficient to their project or workflows.
+                     For applying new cloud resources, go to <a href="{% url 'project-create' %}"><strong>Create New Project </strong></a> from the <strong>Manage Projects tab</strong> on the left pane of the page.</p>
+
+            </div>
+
+	  </br>
+	  </br>
+	  </br>
+	  {% endif %}
+          <div class="container-fluid">
+	    <br>
+            <br>
+            <br>
+          {% if user.is_staff %}
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active"><h1>Dashboard</h1></li>
+            </ol>
+
+
+            <div class="row">
+
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-primary big text-white mb-4" href="#">
+                        <a class="card-body" >Project Completed<h1 style="text-align:right;"> <strong>{{completed_projects}}</strong></h1> </a>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4" href="#">
+                        <div class="card-body">Project Approved<h1 style="text-align:right;"><strong> {{approved_projects}}</strong></h1></div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-warning text-white mb-4" href="#">
+                        <div class="card-body">Project Pending <h1 style="text-align:right;"><strong>{{pending_projects}}</strong></h1></div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-danger text-white mb-4" href="#">
+                        <div class="card-body">Project Declined<h1 style="text-align:right;"> <strong> {{declined_projects}}</strong></h1></div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card mb-4 ">
+                        <div class="card-header"><i class="fas fa-chart-pie mr-1"></i>Project Categories</div>
+                        <div class="card-body"><canvas id="myPieChart" width="100%" height="40"></canvas></div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card mb-4">
+                        <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>Registered Users </div>
+                        <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa fa-users"></i> CHPC OpenStack Users</div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead class = "alert-success">
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Institution</th>
+                                    <th>Contact Number</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                              {% for Profile in profiles %}
+
+                              <tr>
+                                  <td>{{ Profile.user.first_name | capfirst }} {{ Profile.user.last_name | capfirst }}</td>
+                                  <td>{{ Profile.user.username | capfirst  }}</td>
+                                  <td>{{Profile.user.email | capfirst }}</td>
+                                  <td>{{Profile.institution | capfirst }}</td>
+                                  <td>{{Profile.phone }}</td>
+
+
+
+                              </tr>
+
+                             {% endfor %}
+
+
+                            </tbody>
+                        </table>
+                        {% include 'includes/pagination.html' %}
+                    </div>
+                </div>
+            </div>
               {% endif %}
-            {% endwith %}
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        </div>
+    </main>
+    </br>
+    </br>
+    <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za {% now "Y" %}</div>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'Dash_base.html' %}
 
 {% load static %}
 
@@ -15,15 +15,44 @@
   </script>
 {% endblock %}
 
-{% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Projects</a></li>
-  <li class="breadcrumb-item active">New Project</li>
-{% endblock %}
-
 {% block content %}
-  <form method="post" class="mb-4" novalidate>
-    {% csrf_token %}
-    {% include 'includes/form.html' %}
-    <button type="submit" class="btn btn-success">Apply</button>
-  </form>
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Dashboard</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'Projects-list' %}">Projects</a></li>
+                <li class="breadcrumb-item active">New Project</li>
+            </ol>
+
+            <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+          <form method="post" class="mb-4" novalidate>
+              {% csrf_token %}
+              {% include 'includes/form.html' %}
+              <button type="submit" class="btn btn-success float-sm-right">Apply</button>
+            </form>
+
+
+        </div>
+        </div>
+        </div>
+
+    </main>
+    <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
 {% endblock %}

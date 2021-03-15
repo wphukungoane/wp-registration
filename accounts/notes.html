@@ -26,6 +26,68 @@
 						<th scope="col" >Created at</th>
 						<th scope="col" >Status</th>
 
+
+            class TestView(FormView):
+                template_name = 'contact.html'
+                def get(self, request, *args, **kwargs):
+                    contact_form = ContactForm()
+                    contact_form.prefix = 'contact_form'
+                    social_form = SocialForm()
+                    social_form.prefix = 'social_form'
+                    return self.render_to_response(self.get_context_data('contact_form':contact_form, 'social_form':social_form ))
+
+                def post(self, request, *args, **kwargs):
+                    contact_form = ContactForm(self.request.POST, prefix='contact_form')
+                    social_form = SocialForm(self.request.POST, prefix='social_form ')
+
+                    if contact_form.is_valid() and social_form.is_valid():
+                        ### do something
+                        return HttpResponseRedirect(>>> redirect url <<<)
+                    else:
+                        return self.form_invalid(contact_form,social_form , **kwargs)
+
+
+                def form_invalid(self, contact_form, social_form, **kwargs):
+                    contact_form.prefix='contact_form'
+                    social_form.prefix='social_form'
+                            return self.render_to_response(self.get_context_data('contact_form':contact_form, 'social_form':social_form ))
+
+
+            ====
+            class SignUpView(FormView):
+            	success_url = reverse_lazy('home')
+            	form_class = UserForm
+            	template_name = 'registrations.html'
+
+
+
+            	def post(self, request, *args, **kwargs):
+            		form_class = self.get_form_class()
+            		form = self.get_form(form_class)
+            		form.full_clean()
+
+            		if form.is_valid():
+            			username = form.cleaned_data['username'].replace(' ', '').lower()
+            			password = form.cleaned_data['password1']
+
+            			user = User.objects.create(username=username)
+            			user.first_name = form.cleaned_data['first_name']
+            			user.last_name = form.cleaned_data['last_name']
+            			user.email = form.cleaned_data['email']
+            			user.set_password(password)
+            			user.save()
+
+            			logger.info('New user signed up: %s (%s)', user, user.email)
+
+            			# Automatically authenticate the user after user creation.
+            			user_auth = authenticate(username=username, password=password)
+            			login(request, user_auth)
+
+            			return self.form_valid(form)
+            		else:
+            			return self.form_invalid(form)
+            ===
+
 					</tr>
 				</thead>
 				{% block container %}

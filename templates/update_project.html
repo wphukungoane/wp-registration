@@ -1,37 +1,72 @@
-{% extends 'base.html' %}
+{% extends 'Dash_base.html' %}
 
 {% load static %}
 
-{% block title %} UpdateProject{% endblock %}
+{% block title %}Reviw Project{% endblock %}
 
-{% block stylesheet %}
+
+
+
+
+{% block content %}
+
+<div id="layoutSidenav_content">
   <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
-{% endblock %}
-
-{% block javascript %}
   <script src="{% static 'js/simplemde.min.js' %}"></script>
   <script>
     var simplemde = new SimpleMDE();
   </script>
-{% endblock %}
+    <main>
+        <div class="container-fluid">
+          <br>
+          <br>
+          <br>
+            <ol class="breadcrumb mb-4">
 
-{% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Projects</a></li>
-  <li class="breadcrumb-item active">Update Project</li>
-{% endblock %}
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'Projects-list' %}">Projects</a></li>
+                <li class="breadcrumb-item active">Review Project</li>
+            </ol>
+            {% if messages %}
+            {% for message in messages %}
+             <div class="text-center alert alert-{{ message.tags }}">
+                 {{ message|safe }}
+             </div>
+         {% endfor %}
+         {% endif %}
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-8 col-sm-10">
+              <div class="container-fluid" >
+                <div class=" card " >
+                  <div class="card-body">
+            <form method="post" class="mb-4" novalidate>
+              {% csrf_token %}
+              {% include 'includes/form.html' %}
+              <button type="submit" class="btn btn-success float-right ">Save Changes</button>
+              <a href="{% url 'Projects-list' %}" class="btn btn-outline-secondary " role="button">Cancel</a>
+            </form>
 
-{% block container %}
-<div class="card">
- <div class = "card-header">
-	 <h5 class = "card-title">Update Project #{{project.id}}</h5>
- </div>
- <div class = "card-body">
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+<br>
+<br>
+    </main>
 
-  <form method="post" class="mb-4" novalidate>
-    {% csrf_token %}
-    {% include 'includes/form.html' %}
-    <button type="submit" class="btn btn-success">Update</button>
-  </form>
-  </div>
-  </div>
+    <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
 {% endblock %}

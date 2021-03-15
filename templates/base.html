@@ -1,4 +1,6 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -6,55 +8,44 @@
     <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+
+
+
     {% block stylesheet %}{% endblock %}
   </head>
   <body>
     {% block body %}
       <div class="wrapper">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-          <div class="container">
+
             <a class="navbar-brand" href="{% url 'home' %}">CHPC OpenStack</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="mainMenu">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'home' %}">CHPCWiki</a>
+                  <a class="nav-link" href="http://wiki.chpc.ac.za/start">CHPCWiki</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="https://simpleisbetterthancomplex.com/series/beginners-guide/1.11/" target="_blank" rel="noopener">Tutorial</a>
+                  <a class="nav-link" href="https://chpc.ac.za" target="_blank" rel="noopener">Tutorial</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="https://github.com/sibtc/django-beginners-guide" target="_blank" rel="noopener">GitHub</a>
+                  <li class="nav-item " >
+                    <a class="nav-link " href="{% url 'help' %}" > Helpdesk</a>
                 </li>
               </ul>
-              {% if user.is_authenticated %}
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ user.username }}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                      <a class="dropdown-item" href="{% url 'my_account' %}">My account</a>
-                      <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
-                    </div>
-                  </li>
-                </ul>
-              {% else %}
-                <form class="form-inline ml-auto">
-                  <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
-                  <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
-                </form>
-              {% endif %}
-            </div>
+              <form class="form-inline ml-auto">
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
+              </form>
           </div>
         </nav>
         <div class="container">
           <ol class="breadcrumb my-4">
             {% block breadcrumb %}
+
             {% endblock %}
           </ol>
           {% block content %}
@@ -62,17 +53,28 @@
         </div>
         <div class="push"></div>
       </div>
-      <footer>
-        <div class="container">
-          <a href="http://sibt.co/2xhZa6M" rel="nofollow noopener" target="_blank">
-            <img src="{% static 'img/DO_Powered_by_Badge_black.png' %}" alt="Powered by DigitalOcean" style="height: 30px;">
-          </a>
-        </div>
+      <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid">
+              <div class="d-flex align-items-center justify-content-between small">
+                  <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+                  <div>
+                      <a href="#">Privacy Policy</a>
+                      &middot;
+                      <a href="#">Terms &amp; Conditions</a>
+                  </div>
+              </div>
+          </div>
       </footer>
     {% endblock body %}
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="{% static 'js/popper.min.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+
     {% block javascript %}{% endblock %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-42049022-13"></script>
     <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-42049022-13');</script>

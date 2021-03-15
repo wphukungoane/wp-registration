@@ -1,24 +1,96 @@
-{% extends 'base_accounts.html' %}
-
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}Sign up to CHPC Openstack Users{% endblock %}
 
+{% block breadcrumb %}
+ <h2 class="fs-title "><strong>Create Account </strong></h2>
+{% endblock %}
 {% block content %}
-  <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10 col-sm-12">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">Sign up</h3>
-          <form method="post" class="form-control"  novalidate>
-            {% csrf_token %}
-	    {% include 'includes/form_user.html' %}
-            {% include 'includes/form_profile.html' %}
-            <button type="submit" class="btn btn-primary btn-block">Create an account</button>
-          </form>
-        </div>
-        <div class="card-footer text-muted text-center">
-          Already have an account? <a href="{% url 'login' %}">Log in</a>
-        </div>
-      </div>
+{% if messages %}
+<div class="row">
+<div class="row justify-content-center">
+<div class="alert alert-success" role="alert">
+    <ul class="messages">
+        {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+    </ul>
     </div>
-  </div>
+    </div>
+    </div>
+{% endif %}
+<div class="row justify-content-center" >
+  <div class="container-fluid">
+    <div class=" card ">
+      <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+      <strong>LOGIN DETAILS</strong>
+      <hr>
+      <div class="form-row">
+          <div class="form-group col-md-6 mb-6">
+            {{ user_form.username|as_crispy_field }}
+          </div>
+          <div class="form-group col-md-6 mb-6">
+          {{ user_form.email|as_crispy_field }}
+          </div>
+          <div class="form-group col-md-6 mb-6">
+            {{ user_form.password1|as_crispy_field }}
+          </div>
+          <div class="form-group col-md-6 mb-6">
+          {{ user_form.password2|as_crispy_field }}
+          </div>
+
+    </div>
+
+    <hr>
+    <strong>PERSONAL DETAILS</strong>
+    <hr>
+          <div class="form-row">
+                <div class="form-group col-md-6 mb-6">
+                {{ user_form.first_name|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-6">
+                {{ user_form.last_name|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-6">
+                {{profile_form.Current_Position|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-6">
+                {{ profile_form.institution|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-6">
+                {{ profile_form.address|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-6">
+                {{profile_form.Country|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-6">
+                {{ profile_form.region|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-6">
+                {{ profile_form.city|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-6">
+                {{ profile_form.phone|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-6">
+                {{ profile_form.postal_code|as_crispy_field }}
+                </div>
+
+              </div>
+
+    <button type="submit" class="btn btn-primary float-sm-right">Create an account</button>
+    <a href="{% url 'login' %}" class="btn btn-outline-secondary  ">Cancel</a>
+</form>
+
+</div>
+</div>
+</div>
+</div>
+<br>
 {% endblock %}

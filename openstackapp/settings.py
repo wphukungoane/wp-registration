@@ -17,15 +17,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+# See https://docs.https://simpleisbetterthancomplex.com/references/2016/06/21/date-filter.htmldjangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'o*4&4o-t868@f#adml)!jxv)9rwknpa#d0ja4fd$&e-hyo4u@h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.128.15.5', 'monitoring.chpc.ac.za']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.128.15.5', 'openstackusers.chpc.ac.za']
 
 
 # Application definition
@@ -37,7 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'registration.apps.RegistrationConfig',
+    #added
+    'django.contrib.humanize',
+    'widget_tweaks',
+    #'django_tables2',
+    'multiselectfield',
+    'accounts',
+    'table',
+    'six',
+    'Projects',
+    'crispy_forms',
+    'phone_field',
+    'formtools',
+    'formwizard',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'crum.CurrentRequestUserMiddleware',
 ]
 
 ROOT_URLCONF = 'openstackapp.urls'
@@ -55,7 +69,7 @@ ROOT_URLCONF = 'openstackapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,6 +77,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Projects.context_processor.project_approved',
+                'Projects.context_processor.project_declined',
+                'Projects.context_processor.project_completed',
+                'Projects.context_processor.project_pending',
+                'Projects.context_processor.new_user_count_month',
+
+
             ],
         },
     },
@@ -77,7 +98,7 @@ WSGI_APPLICATION = 'openstackapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'chpc',
+        'NAME': 'chpcdb',
         'USER': 'chpcadmin',
         'PASSWORD': '123qwe',
         'HOST': 'localhost',
@@ -123,3 +144,52 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = '10.128.89.51'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = 'openstackusers <no-reply@openstackusers.chpc.ac.za>'
+RESOURCE_ADMIN_EMAIL = 'wphukungoane@gmail.com'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+APPEND_SLASH = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True

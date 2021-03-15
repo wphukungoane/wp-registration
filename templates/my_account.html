@@ -1,21 +1,56 @@
-{% extends 'base.html' %}
+{% extends 'Dash_base.html' %}
 
 {% block title %}My account{% endblock %}
 
-{% block breadcrumb %}
-  <li class="breadcrumb-item active">Update Account Details</li>
-{% endblock %}
+
+
 
 {% block content %}
-  <div class="row">
-    <div class="col-lg-6 col-md-8 col-sm-10">
-      <form method="post" novalidate>
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <br>
+            <br>
+            <br>
+            <ol class="breadcrumb mb-4">
+                <li  class="breadcrumb-item active"><a href="{% url 'home' %}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Update Account Details</li>
+            </ol>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-md-8 col-sm-10">
+      <div class="container-fluid" >
+        <div class=" card " >
+          <div class="card-body">
+      <form method="post" class="inline-form" novalidate>
         {% csrf_token %}
         {% include 'includes/form.html' %}
-	
-        <button type="submit" class="btn btn-success">Save changes</button>
-        <button type="submit" class="btn btn-success">Cancel</button>
+
+        <button type="submit" class="btn btn-success float-right">Save changes</button>
+        <a href="{% url 'Projects-list' %}" class="btn btn-outline-secondary " role="button">Cancel</a>
+
       </form>
     </div>
   </div>
+</div>
+</div>
+</div>
+<br>
+<br>
+</main>
+
+
+<footer class="py-4 bg-light mt-auto">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; OpenStackUsers.chpc.ac.za 2020</div>
+            <div>
+                <a href="#">Privacy Policy</a>
+                &middot;
+                <a href="#">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
 {% endblock %}

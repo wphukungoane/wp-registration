@@ -1,28 +1,62 @@
 {% extends 'base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 {% load static %}
 
-{% block title %} NewProject{% endblock %}
-
-{% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
-{% endblock %}
-
-{% block javascript %}
-  <script src="{% static 'js/simplemde.min.js' %}"></script>
-  <script>
-    var simplemde = new SimpleMDE();
-  </script>
-{% endblock %}
-
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'Projects-list' %}">Contact</a></li>
-  <li class="breadcrumb-item active">CHPC Helpdesk</li>
+ <h2 class="fs-title mt-2 "><strong>Contact Us</strong></h2>
 {% endblock %}
-
-
-
-{% load crispy_forms_tags %}
 
 {% block content %}
-    {% crispy form %}
+{% if messages %}
+<div class="row justify-content-center">
+<div class="alert alert-success" role="alert">
+    <ul class="messages">
+        {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+    </ul>
+    </div>
+    </div>
+    {% endif %}
+<div class="row " >
+    <div class="container-fluid">
+    <div class=" card ">
+      <div class="card-body">
+        <form method="post" novalidate>
+        {% csrf_token %}
+        {% include 'includes/form.html' with form=form %}
+        <div class="form-actions">
+          <button type="submit" class="btn btn-success float-right">Send</button>
+          <a href="{% url 'signup' %}" class="btn btn-outline-secondary  ">Back</a>
+
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="row " >
+
+  <div class="container-fluid">
+    <div class=" card ">
+      <div class="card-body">
+
+        <p><strong>Address:</strong> CSIR Campus 15 Lower Hope Road Rosebank Cape Town South Africa<br>
+        <strong>Tel:</strong> +27 (0)21 658-2740<br>
+        <strong>Fax:</strong> +27 (0)21 658-2744<br>
+         Should you wish to visit us download our printable  <a href ="https://chpc.ac.za/images/pdf/map_chpc_big.pdf">MAP<a>
+        </p>
+      </div>
+    </div>
+    </div>
+    </div>
+    <br>
+    <br>
 {% endblock %}

@@ -10,4 +10,4 @@ class AccountsTable(tables.Table):
 
     class Meta:
         model = Profile
-        attrs = {"class": "accountstable"}
+        attrs = {"class": "table"}
