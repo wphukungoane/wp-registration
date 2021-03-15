@@ -99,8 +99,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'chpcdb',
-        'USER': 'chpcadmin',
-        'PASSWORD': '123qwe',
+        'USER': '####',
+        'PASSWORD': '###',
         'HOST': 'localhost',
         'PORT': '',
     }
